@@ -26,11 +26,13 @@ class Student:
         while i < len(a):
             b = b + sum(a[i])
             c = c + len(a[i])
-            i = i + 1
+            i += 1
             return  (b/c)
+    def __lt__(self, other):
+        return self.averege() < other.averege()
     def __str__(self):
         res = f'Имя: {self.name}\nФамилия: {self.surname}\nCредняя оценка за лекции: {self.averege()}' \
-              f'\nКурсы в процесе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {self.finished_courses}'
+              f'\nКурсы в процесе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return res
 
 
@@ -55,7 +57,9 @@ class Lector(Mentor):
             b = b + sum(a[i])
             c = c + len(a[i])
             i = i + 1
-            return  (b/c)
+        return  (b/c)
+    def __lt__(self, other):
+        return self.averege() < other.averege()
     def __str__(self):
         res = f'Имя: {self.name}\nФамилия: {self.surname}\nCредняя оценка за лекции: {self.averege()}'
         return res
@@ -77,36 +81,97 @@ class Reviewer(Mentor):
         return res
 
 
-
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
-best_student.courses_in_progress += ['PHP']
-
-
-
-cool_mentor = Reviewer('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
-cool_mentor.courses_attached += ['PHP']
-cool_lector = Lector('Some', 'Buddy')
-cool_lector.courses_attached += ['Python']
-cool_lector.courses_attached += ['PHP']
-
-
-best_student.rate_hw_lector(cool_lector, 'Python', 5)
-best_student.rate_hw_lector(cool_lector, 'Python', 5)
-best_student.rate_hw_lector(cool_lector, 'PHP', 5)
-
-cool_mentor.rate_hw_student(best_student, 'PHP', 10)
-cool_mentor.rate_hw_student(best_student, 'Python', 10)
-cool_mentor.rate_hw_student(best_student, 'Python', 10)
-
-
-
-
-
-
-print(cool_mentor)
+# _____________________Создание экземплеров класса Student______________________________________
+student_1 = Student('Ruoy', 'Eman', 'your_gender')
+student_1.courses_in_progress += ['Python']
+student_1.finished_courses += ['Git']
+student_2 = Student('Sem', 'Carter', 'your_gender')
+student_2.courses_in_progress += ['PHP']
+student_2.finished_courses += ['Git']
+student_3 = Student('Slava', 'Volkov', 'your_gender')
+student_3.courses_in_progress += ['PHP']
+student_3.finished_courses += ['Git']
+student_4 = Student('Pol', 'Willam', 'your_gender')
+student_4.courses_in_progress += ['Python']
+student_4.finished_courses += ['Git']
+# _____________________Создание экземплеров класса Lector______________________________________
+lector_1 = Lector('Some', 'Buddy')
+lector_1.courses_attached += ['Python']
+lector_1.courses_attached += ['Git']
+lector_2 = Lector('Sam', 'Harald')
+lector_2.courses_attached += ['PHP']
+lector_2.courses_attached += ['Python']
+# _____________________Создание экземплеров класса Reviewer______________________________________
+Reviewer_1 = Reviewer('Gleb', 'Orlov')
+Reviewer_1.courses_attached += ['Python']
+Reviewer_2 = Reviewer('Sam', 'Davidson')
+Reviewer_2.courses_attached += ['Git']
+Reviewer_3 = Reviewer('Clarc', 'Kent')
+Reviewer_3.courses_attached += ['PHP']
+# __________________________Выстовление оценнок Лекторам_____________________________________________
+student_1.rate_hw_lector(lector_1, 'Python', 8)
+student_4.rate_hw_lector(lector_1, 'Python', 7)
+student_2.rate_hw_lector(lector_2, 'PHP', 9)
+student_3.rate_hw_lector(lector_2, 'PHP', 10)
+# __________________________Выстовление оценнок Студентам_____________________________________________
+Reviewer_1.rate_hw_student(student_1, 'Python', 10)
+Reviewer_3.rate_hw_student(student_2, 'PHP', 9)
+Reviewer_3.rate_hw_student(student_3, 'PHP', 7)
+Reviewer_1.rate_hw_student(student_4, 'Python', 7)
+# ________________________Вывод методов______________________
+print(Reviewer_1)
 print('')
-print(cool_lector)
+print(Reviewer_2)
 print('')
-print(best_student)
+print(Reviewer_3)
+print('')
+print(lector_1)
+print('')
+print(lector_2)
+print('')
+print(lector_1 < lector_2)
+print('')
+print(student_1)
+print('')
+print(student_2)
+
+# ____________________Создание списка Студентов и Лекторов_________________
+list_student = [student_1, student_2, student_3, student_4]
+list_lector = [lector_1, lector_2]
+#_________________________________________Funchion for Student__________________________________
+def averege_student (list_s, language_s):
+    count = 0
+    res = 0.0
+    count_ln = 0
+    while count < len(list_s):
+        if language_s == (list_s[count].courses_in_progress[0]):
+            res = res + list_s[count].averege()
+            count += 1
+            count_ln += 1
+        else:
+            count += 1
+    return res/count_ln
+
+
+
+print('')
+print(averege_student (list_student, 'PHP'))
+#_________________________________________Funchion for Lector__________________________________
+def averege_lector (list_s, language_s):
+    count = 0
+    res = 0.0
+    count_ln = 0
+    while count < len(list_s):
+        if language_s == (list_s[count].courses_attached[0]):
+            res = res + list_s[count].averege()
+            count += 1
+            count_ln += 1
+        else:
+            count += 1
+    return res/count_ln
+
+
+
+print('')
+print(averege_lector(list_lector, 'PHP'))
+
