@@ -140,16 +140,12 @@ list_student = [student_1, student_2, student_3, student_4]
 list_lector = [lector_1, lector_2]
 #_________________________________________Funchion for Student__________________________________
 def averege_student (list_s, language_s):
-    count = 0
     res = 0.0
     count_ln = 0
-    while count < len(list_s):
-        if language_s == (list_s[count].courses_in_progress[0]):
-            res = res + list_s[count].averege()
-            count += 1
+    for list in list_s:
+        if language_s == (list.courses_in_progress[0]):
+            res = res + list.averege()
             count_ln += 1
-        else:
-            count += 1
     return res/count_ln
 
 
@@ -158,20 +154,17 @@ print('')
 print(averege_student (list_student, 'PHP'))
 #_________________________________________Funchion for Lector__________________________________
 def averege_lector (list_s, language_s):
-    count = 0
     res = 0.0
     count_ln = 0
-    while count < len(list_s):
-        if language_s == (list_s[count].courses_attached[0]):
-            res = res + list_s[count].averege()
-            count += 1
+    for list in list_s:
+        if language_s == (list.courses_attached[0]):
+            res = res + list.averege()
             count_ln += 1
-        else:
-            count += 1
     return res/count_ln
 
 
 
 print('')
 print(averege_lector(list_lector, 'PHP'))
+
 
