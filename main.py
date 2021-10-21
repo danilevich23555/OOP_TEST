@@ -18,16 +18,19 @@ class Student:
                 lector.grades_lector[course] = [grade]
         else:
             return 'Ошибка'
+
     def averege(self):
-        i = 0
-        b = 0
-        c = 0
-        a = list(self.grades.values())
-        while i < len(a):
-            b = b + sum(a[i])
-            c = c + len(a[i])
-            i += 1
-            return  (b/c)
+        counter = 0
+        sum_averege = 0
+        quantity_mark = 0
+        meaning_mark = list(self.grades.values())
+        while counter < len(meaning_mark):
+            sum_averege = sum_averege + sum(meaning_mark[counter])
+            quantity_mark = quantity_mark + len(meaning_mark[counter])
+            counter = counter + 1
+        return (sum_averege / quantity_mark)
+
+
     def __lt__(self, other):
         return self.averege() < other.averege()
     def __str__(self):
@@ -43,21 +46,20 @@ class Mentor:
         self.courses_attached = []
 
 class Lector(Mentor):
-    b = 0
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades_lector = {}
 
     def averege(self):
-        i = 0
-        b = 0
-        c = 0
-        a = list(self.grades_lector.values())
-        while i < len(a):
-            b = b + sum(a[i])
-            c = c + len(a[i])
-            i = i + 1
-        return  (b/c)
+        counter = 0
+        sum_averege = 0
+        quantity_mark = 0
+        meaning_mark = list(self.grades_lector.values())
+        while counter < len(meaning_mark):
+            sum_averege = sum_averege + sum(meaning_mark[counter])
+            quantity_mark = quantity_mark + len(meaning_mark[counter])
+            counter = counter + 1
+        return  (sum_averege/quantity_mark)
     def __lt__(self, other):
         return self.averege() < other.averege()
     def __str__(self):
